@@ -1,0 +1,65 @@
+leetcode 303
+
+class NumArray {
+public:
+vector<int>pre;
+    NumArray(vector<int>& nums) {
+       pre=vector<int>(nums.size());
+       pre[0]=nums[0];
+       for(int i=1;i<nums.size();i++){
+           pre[i]=nums[i]+pre[i-1];
+       } 
+    }
+    
+    int sumRange(int left, int right) {
+        if(left==0)return pre[right];
+        return pre[right]-pre[left-1];
+    }
+};
+
+
+leetcode 724
+
+class Solution {
+public:
+    int pivotIndex(vector<int>& nums) {
+        int n=nums.size();
+        int pre[n];
+        int suf[n];
+        pre[0]=nums[0];
+        for(int i=1;i<nums.size();i++){
+            pre[i]=nums[i]+pre[i-1];
+        }
+suf[n-1]=nums[n-1];
+        for(int i=n-2;i>=0;i--){
+           suf[i]=nums[i]+suf[i+1];
+        }
+
+        for(int i=0;i<nums.size();i++){
+            if(pre[i]==suf[i]){
+                return i;
+            }
+        }
+        return -1;
+    }
+};
+
+
+leetcode 2640
+class Solution {
+public:
+    vector<long long> findPrefixScore(vector<int>& nums) {
+         vector<long long int> v(nums.size(),0);
+           v[0]=2*nums[0];
+           int maxi=nums[0];
+            //maxi=max(maxi,(long long)nums[0]);
+            for(int i=1;i<nums.size();i++){
+               maxi= max(maxi,nums[i]);
+                v[i]=v[i-1]+maxi+nums[i];
+            }
+            return v;
+    }
+};
+
+
+ 
